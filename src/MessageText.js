@@ -1,15 +1,14 @@
 /* eslint no-use-before-define: ["error", { "variables": false }] */
-import PropTypes from 'prop-types';
-import React from 'react';
-import { Linking, StyleSheet, Text, View, ViewPropTypes } from 'react-native';
+import PropTypes from "prop-types";
+import React from "react";
+import { Linking, StyleSheet, Text, View, ViewPropTypes } from "react-native";
 
-import ParsedText from 'react-native-parsed-text';
-import Communications from 'react-native-communications';
+import ParsedText from "react-native-parsed-text";
+import Communications from "react-native-communications";
 
 const WWW_URL_PATTERN = /^www\./i;
 
 export default class MessageText extends React.Component {
-
   constructor(props) {
     super(props);
     this.onUrlPress = this.onUrlPress.bind(this);
@@ -23,10 +22,10 @@ export default class MessageText extends React.Component {
     if (WWW_URL_PATTERN.test(url)) {
       this.onUrlPress(`http://${url}`);
     } else {
-      Linking.canOpenURL(url).then((supported) => {
+      Linking.canOpenURL(url).then(supported => {
         if (!supported) {
           // eslint-disable-next-line
-          console.error('No handler for URL:', url);
+          console.error("No handler for URL:", url);
         } else {
           Linking.openURL(url);
         }
@@ -35,14 +34,14 @@ export default class MessageText extends React.Component {
   }
 
   onPhonePress(phone) {
-    const options = ['Call', 'Text', 'Cancel'];
+    const options = ["Call", "Text", "Cancel"];
     const cancelButtonIndex = options.length - 1;
     this.context.actionSheet().showActionSheetWithOptions(
       {
         options,
-        cancelButtonIndex,
+        cancelButtonIndex
       },
-      (buttonIndex) => {
+      buttonIndex => {
         switch (buttonIndex) {
           case 0:
             Communications.phonecall(phone, true);
@@ -53,7 +52,7 @@ export default class MessageText extends React.Component {
           default:
             break;
         }
-      },
+      }
     );
   }
 
@@ -64,26 +63,26 @@ export default class MessageText extends React.Component {
   render() {
     const linkStyle = StyleSheet.flatten([
       styles[this.props.position].link,
-      this.props.linkStyle[this.props.position],
+      this.props.linkStyle[this.props.position]
     ]);
     return (
       <View
         style={[
           styles[this.props.position].container,
-          this.props.containerStyle[this.props.position],
+          this.props.containerStyle[this.props.position]
         ]}
       >
         <ParsedText
           style={[
             styles[this.props.position].text,
             this.props.textStyle[this.props.position],
-            this.props.customTextStyle,
+            this.props.customTextStyle
           ]}
           parse={[
             ...this.props.parsePatterns(linkStyle),
-            { type: 'url', style: linkStyle, onPress: this.onUrlPress },
-            { type: 'phone', style: linkStyle, onPress: this.onPhonePress },
-            { type: 'email', style: linkStyle, onPress: this.onEmailPress },
+            { type: "url", style: linkStyle, onPress: this.onUrlPress },
+            { type: "phone", style: linkStyle, onPress: this.onPhonePress },
+            { type: "email", style: linkStyle, onPress: this.onEmailPress }
           ]}
           childrenProps={{ ...this.props.textProps }}
         >
@@ -92,7 +91,6 @@ export default class MessageText extends React.Component {
       </View>
     );
   }
-
 }
 
 const textStyle = {
@@ -101,67 +99,67 @@ const textStyle = {
   marginTop: 5,
   marginBottom: 5,
   marginLeft: 10,
-  marginRight: 10,
+  marginRight: 10
 };
 
 const styles = {
   left: StyleSheet.create({
     container: {},
     text: {
-      color: 'black',
-      ...textStyle,
+      color: "black",
+      ...textStyle
     },
     link: {
-      color: 'black',
-      textDecorationLine: 'underline',
-    },
+      color: "black",
+      textDecorationLine: "underline"
+    }
   }),
   right: StyleSheet.create({
     container: {},
     text: {
-      color: 'white',
-      ...textStyle,
+      color: "white",
+      ...textStyle
     },
     link: {
-      color: 'white',
-      textDecorationLine: 'underline',
-    },
-  }),
+      color: "white",
+      textDecorationLine: "underline"
+    }
+  })
 };
 
 MessageText.contextTypes = {
-  actionSheet: PropTypes.func,
+  actionSheet: PropTypes.func
 };
 
 MessageText.defaultProps = {
-  position: 'left',
+  position: "left",
   currentMessage: {
-    text: '',
+    text: ""
   },
   containerStyle: {},
   textStyle: {},
   linkStyle: {},
   customTextStyle: {},
   textProps: {},
-  parsePatterns: () => [],
+  parsePatterns: () => []
 };
 
 MessageText.propTypes = {
-  position: PropTypes.oneOf(['left', 'right']),
+  position: PropTypes.oneOf(["left", "right"]),
   currentMessage: PropTypes.object,
   containerStyle: PropTypes.shape({
     left: ViewPropTypes.style,
-    right: ViewPropTypes.style,
+    right: ViewPropTypes.style
   }),
   textStyle: PropTypes.shape({
     left: Text.propTypes.style,
-    right: Text.propTypes.style,
+    right: Text.propTypes.style
   }),
   linkStyle: PropTypes.shape({
     left: Text.propTypes.style,
-    right: Text.propTypes.style,
+    right: Text.propTypes.style
   }),
   parsePatterns: PropTypes.func,
   textProps: PropTypes.object,
-  customTextStyle: Text.propTypes.style,
+  customTextStyle: Text.propTypes.style
 };

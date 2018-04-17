@@ -14,6 +14,7 @@ export default function MessageImage({
 }) {
   return (
     <View style={[styles.container, containerStyle]}>
+    
       <Lightbox
         activeProps={{
           style: styles.imageActive,
