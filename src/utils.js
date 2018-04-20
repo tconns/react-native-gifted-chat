@@ -29,12 +29,12 @@ export function isSameHour(currentMessage = {}, diffMessage = {}) {
   if (!currentCreatedAt.isValid() || !diffCreatedAt.isValid()) {
     return false;
   }
-  return currentCreatedAt.isSame(diffCreatedAt,'minute')
-  // return currentCreatedAt.isBetween(
-  //   diffCreatedAt,
-  //   diffCreatedAt + 10 * 60 * 1000,
-  //   "[]"
-  // );
+  // return currentCreatedAt.isSame(diffCreatedAt,'minute')
+  return currentCreatedAt.isBetween(
+    diffCreatedAt,
+    diffCreatedAt + 10 * 60 * 1000,
+    "[]"
+  );
 }
 
 export function isSameUser(currentMessage = {}, diffMessage = {}) {

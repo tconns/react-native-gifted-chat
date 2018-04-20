@@ -84,7 +84,7 @@ const styles = {
     },
     onBottom: {},
     image: {
-      height: 36,
+      height: 32,
       width: 36,
       borderRadius: 18
     }
@@ -98,7 +98,7 @@ const styles = {
     },
     onBottom: {},
     image: {
-      height: 36,
+      height: 32,
       width: 36,
       borderRadius: 18
     }
