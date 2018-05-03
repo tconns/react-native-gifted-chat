@@ -307,7 +307,8 @@ class GiftedChat extends React.Component {
     return (
       <AnimatedView
         style={{
-          height: this.state.messagesContainerHeight,
+          height: "100%",
+          paddingBottom:40
         }}
       >
         <MessageContainer
